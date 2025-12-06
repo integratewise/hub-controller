@@ -1,7 +1,13 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { api } from '@/lib/hub/api';
-import { DocRef } from '@/lib/hub/types';
+type DocRef = {
+  source: string;
+  title: string;
+  url: string;
+  tags?: string[];
+  lastModified?: string;
+};
 import { Section } from '@/components/hub/Section';
 import { Badge } from '@/components/hub/Badge';
 import { EmptyState } from '@/components/hub/EmptyState';

@@ -1,19 +1,42 @@
 export type KPI = { key: string; value: number; label?: string };
 
-export type Project = { 
-  id?: string; 
-  name: string; 
-  category: string; 
-  status: string; 
+// Entity from API
+export type Entity = {
+  id: string;
+  type: string;
+  title: string;
+  description?: string;
+  status: string;
+  priority: string;
+  category?: string;
+  tags?: string[];
+  metadata?: Record<string, unknown>;
+  parent_id?: string;
   owner?: string;
-  createdAt?: string;
-  updatedAt?: string;
+  source?: string;
+  source_id?: string;
+  due_date?: string;
+  created_at: string;
+  updated_at: string;
 };
 
-export type FinanceSummary = { 
-  budget: number; 
-  actual: number; 
-  burn: number; 
+export type Project = {
+  id: string;
+  title: string;
+  name?: string; // alias for title
+  description?: string;
+  category: string;
+  status: string;
+  priority?: string;
+  owner?: string;
+  created_at?: string;
+  updated_at?: string;
+};
+
+export type FinanceSummary = {
+  budget: number;
+  actual: number;
+  burn: number;
   runwayMonths: number;
 };
 
@@ -22,7 +45,6 @@ export type DocRef = {
   title: string;
   url: string;
   tags?: string[];
-  lastModified?: string;
 };
 
 export type Opportunity = {
@@ -43,3 +65,28 @@ export type Customer = {
   lastActivity?: string;
 };
 
+export type TeamMember = {
+  name: string;
+  role: string;
+  utilization: number;
+  status: string;
+};
+
+export type Metric = {
+  id: string;
+  key: string;
+  value: number;
+  unit?: string;
+  category: string;
+  period?: string;
+  created_at: string;
+};
+
+export type CommandResult = {
+  intent: string;
+  action?: string;
+  entities?: Entity[];
+  metrics?: Metric[];
+  message: string;
+  data?: unknown;
+};
