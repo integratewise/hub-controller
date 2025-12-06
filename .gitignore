@@ -37,3 +37,7 @@ next-env.d.ts
 # Cloudflare
 .wrangler
 .dev.vars
+
+# API
+api/node_modules
+api/.wrangler

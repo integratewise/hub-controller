@@ -1,0 +1,20 @@
+name = "hub-controller-api"
+main = "src/index.ts"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+ENVIRONMENT = "production"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "hub-controller-db"
+database_id = "b8aca43f-82dc-4f7d-a92c-bed84a78f30b"
+
+# Uncomment when you have Vectorize set up
+# [[vectorize]]
+# binding = "VECTORIZE"
+# index_name = "hub-embeddings"
+
+[ai]
+binding = "AI"
