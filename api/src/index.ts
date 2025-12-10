@@ -3,19 +3,57 @@ import { cors } from 'hono/cors';
 import { Env, Entity, Metric, EntityType } from './types';
 import * as db from './db';
 import { processCommand, processWithClaude } from './ai';
+import {
+  financeRoutes,
+  complianceRoutes,
+  salesRoutes,
+  marketingRoutes,
+  teamRoutes,
+  investorRoutes,
+  okrRoutes,
+  dashboardRoutes,
+  integrationRoutes,
+} from './routes';
+import { authRoutes } from './auth';
+import { taskRoutes } from './routes/tasks';
 
 const app = new Hono<{ Bindings: Env }>();
 
 // CORS for frontend
 app.use('*', cors({
-  origin: ['http://localhost:3000', 'https://hub-controller.pages.dev', 'https://1d15f5c7.hub-controller.pages.dev'],
+  origin: [
+    'http://localhost:3000',
+    'https://hub-controller.pages.dev',
+    'https://1d15f5c7.hub-controller.pages.dev',
+    'https://controller.integratewise.xyz',
+  ],
   allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
 }));
 
 // Health check
-app.get('/', (c) => c.json({ status: 'ok', service: 'hub-controller-api' }));
-app.get('/api', (c) => c.json({ status: 'ok', version: '1.0.0' }));
+app.get('/', (c) => c.json({ status: 'ok', service: 'hub-controller-api', version: '2.1.0' }));
+app.get('/api', (c) => c.json({ status: 'ok', version: '2.1.0', modules: [
+  'auth', 'entities', 'projects', 'tasks', 'customers', 'opportunities',
+  'finance', 'compliance', 'sales', 'marketing', 'team',
+  'investors', 'okrs', 'integrations', 'dashboard', 'copilot'
+]}));
+
+// Auth routes (public)
+app.route('/api/auth', authRoutes);
+
+// Mount comprehensive route modules
+app.route('/api/tasks', taskRoutes);
+app.route('/api/finance', financeRoutes);
+app.route('/api/compliance', complianceRoutes);
+app.route('/api/sales', salesRoutes);
+app.route('/api/marketing', marketingRoutes);
+app.route('/api/team', teamRoutes);
+app.route('/api/investors', investorRoutes);
+app.route('/api/okrs', okrRoutes);
+app.route('/api/dashboard', dashboardRoutes);
+app.route('/api/integrations', integrationRoutes);
 
 // ============ AI Command Endpoint ============
 app.post('/api/command', async (c) => {

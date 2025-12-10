@@ -1,4 +1,13 @@
-export function formatCurrency(value: number): string {
+export function formatCurrency(value: number, compact?: boolean): string {
+  if (compact && Math.abs(value) >= 1000) {
+    const suffixes = ['', 'K', 'M', 'B', 'T'];
+    const tier = Math.floor(Math.log10(Math.abs(value)) / 3);
+    const suffix = suffixes[tier];
+    const scale = Math.pow(10, tier * 3);
+    const scaled = value / scale;
+    return `$${scaled.toFixed(scaled < 10 ? 1 : 0)}${suffix}`;
+  }
+  
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
