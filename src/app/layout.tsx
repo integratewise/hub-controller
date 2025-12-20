@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { AuthProvider } from '@/lib/auth/context';
+import { AuthProvider } from '@/components/auth-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Hub Controller',
-  description: 'Universal Controller Hub - Dashboard and command center',
+  title: 'IntegrateWise Hub',
+  description: 'Business documentation and knowledge hub',
 };
 
 export default function RootLayout({
